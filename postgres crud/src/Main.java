@@ -7,8 +7,9 @@ import java.sql.Connection;
 public class Main {
     public static void main(String[] args) {
         DbFunctions db = new DbFunctions();
-        Connection conn = db.connect("registration-db", "postgres", "#Keer2003#");
+        Connection conn = db.connect("registration-db", "postgres", "root");
 //        db.createTable(conn, "student");
-        db.insert_row(conn, "student", 101, "aaa", "a@mail.com");
+//        db.insert_row(conn, "student", 101, "aaa", "a@mail.com");
+        db.display(conn, "student");
     }
 }
