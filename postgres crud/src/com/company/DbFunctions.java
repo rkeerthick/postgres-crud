@@ -33,10 +33,10 @@ public class DbFunctions {
         }
     }
 
-    public void insert_row(Connection conn, String table_name, int sid, String name, String email) {
+    public void insert_row(Connection conn, int sid, String name, String email) {
         Statement st;
         try {
-            String query = String.format("insert into %s values(%d, '%s', '%s');", table_name, sid, name, email);
+            String query = String.format("insert into student values(%d, '%s', '%s');", sid, name, email);
             st = conn.createStatement();
             st.executeUpdate(query);
             System.out.println("inserted");
@@ -46,17 +46,70 @@ public class DbFunctions {
         }
     }
 
-    public void display(Connection conn, String table_name) {
+    public void update_row_by_name(Connection conn, int sid, String name) {
+        Statement st ;
+        try {
+            String query = String.format("update student set name = '%s' where id = %d", name, sid);
+            st = conn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("name updated");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void update_row_by_email(Connection conn, int sid, String email) {
+        Statement st ;
+        try {
+            String query = String.format("update student set email = '%s' where id = %d", email, sid);
+            st = conn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("email updated");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void update_row(Connection conn, int sid, String name, String email) {
+        Statement st ;
+        try {
+            String query = String.format("update student set name = '%s' and email = '%s' where id = %d", name, email, sid);
+            st = conn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("name and email are updated");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void delete(Connection conn, int sid) {
+        Statement st ;
+        try {
+            String query = String.format("delete from student where id = %d", sid);
+            st = conn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("deleted");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void display(Connection conn ){
         Statement st;
         ResultSet rs = null;
         try {
-            String query = String.format("select * from %s;", table_name);
+            String query = String.format("select * from student;");
             st = conn.createStatement();
             rs = st.executeQuery(query);
             while(rs.next()) {
-                System.out.println(rs.getInt("id"));
-                System.out.println(rs.getString("name"));
-                System.out.println(rs.getString("email"));
+                System.out.println("ID\tName\tE\tmail\t\t");
+                System.out.print(rs.getInt("id") + "\t");
+                System.out.println(rs.getString("name") + "\t");
+                System.out.println(rs.getString("email") + "\t");
             }
         }
         catch (Exception e) {
